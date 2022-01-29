@@ -54,3 +54,27 @@ print("actorsCharacter")
 print(clean_data(movies['actorsCharacter']))
 
 
+#Ejercicio 4
+
+#4.1
+print(movies.sort_values(by='budget',ascending=False)[['originalTitle','budget']].head(10))
+
+#4.2
+print(movies.sort_values(by='revenue',ascending=False)[['originalTitle','revenue']].head(10))
+
+#4.3
+print(movies.sort_values(by='voteCount',ascending=False)[['originalTitle','voteCount']].head(1))
+
+#4.4
+print(movies.sort_values(by='voteAvg',ascending=True)[['originalTitle','voteAvg']].head(1))
+
+#4.5
+print(movies['releaseDate'].str.split('-').str[0].value_counts().sort_values(ascending=False))
+
+plt.bar(movies['releaseDate'].str.split('-').str[0].value_counts().sort_index().dropna().index,movies['releaseDate'].str.split('-').str[0].value_counts().sort_index().values,color='red')
+plt.title('Grafico de barras para peliculas por año')
+plt.xlabel('año')
+plt.xticks(rotation=90)
+plt.ylabel('Cantidad de peliculas')
+plt.tight_layout()
+plt.show()

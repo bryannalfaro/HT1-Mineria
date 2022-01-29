@@ -22,6 +22,55 @@ print(movies.shape)
 print("Resumen de variables")
 print(movies.describe().transpose())
 
+#Evaluacion de normalidad de datos
+data = movies['popularity'].dropna()
+plt.hist(data,color='green')
+plt.title('Histograma para popularidad')
+plt.xlabel('Popularidad')
+plt.ylabel('Cantidad')
+plt.show()
+qqplot(data , line='s')
+plt.show()
+
+print('Curtosis: ',stats.kurtosis(data))
+print('Asimetria: ',stats.skew(data))
+
+data = movies['budget'].dropna()
+plt.hist(data,color='green')
+plt.title('Histograma para budget')
+plt.xlabel('Budget')
+plt.ylabel('Cantidad')
+plt.show()
+qqplot(data , line='s')
+plt.show()
+
+print('Curtosis: ',stats.kurtosis(data))
+print('Asimetria: ',stats.skew(data))
+
+data = movies['revenue'].dropna()
+plt.hist(data,color='green')
+plt.title('Histograma para revenue')
+plt.xlabel('Revenue')
+plt.ylabel('Cantidad')
+plt.show()
+qqplot(data , line='s')
+plt.show()
+
+print('Curtosis: ',stats.kurtosis(data))
+print('Asimetria: ',stats.skew(data))
+
+data = movies['genresAmount'].dropna()
+plt.hist(data,color='green')
+plt.title('Histograma para genresAmount')
+plt.xlabel('genresAmount')
+plt.ylabel('Cantidad')
+plt.show()
+qqplot(data , line='s')
+plt.show()
+
+print('Curtosis: ',stats.kurtosis(data))
+print('Asimetria: ',stats.skew(data))
+
 #Frecuencia de datos cualitativos
 print((movies['id'].value_counts()))
 print((movies['originalTitle'].value_counts()))

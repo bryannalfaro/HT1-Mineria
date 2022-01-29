@@ -3,13 +3,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from statsmodels.graphics.gofplots import qqplot
 from scipy import stats
-from IPython.core.display import display
 import seaborn as sns
 movies = pd.read_csv('movies.csv')
-pd.set_option('display.max_columns', None)
+#pd.set_option('display.max_columns',None)
 
 #Primeras filas con head
-print("Exploracion de primeros datos de cada variable")
+'''print("Exploracion de primeros datos de cada variable")
 print(movies.head())
 
 #Observaciones y variables
@@ -18,4 +17,12 @@ print(movies.shape)
 
 #Resumen de variables
 print("Resumen de variables")
-print(movies.describe().transpose())
+print(movies.describe().transpose())'''
+
+#Frecuencia de datos cualitativos
+print((movies['originalTitle'].value_counts()))
+print((movies['originalTitle'].value_counts()))
+print((movies['originalTitle'].value_counts()))
+print((movies['originalTitle'].value_counts()))
+print((movies['originalTitle'].value_counts()))
+print((movies['originalTitle'].value_counts()))

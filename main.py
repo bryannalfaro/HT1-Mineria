@@ -10,7 +10,7 @@ from collections import Counter
 movies = pd.read_csv('movies.csv')
 #pd.set_option('display.max_columns',None)
 
-#Primeras filas con head
+'''#Primeras filas con head
 print("Exploracion de primeros datos de cada variable")
 print(movies.head())
 
@@ -126,4 +126,14 @@ plt.xlabel('año')
 plt.xticks(rotation=90)
 plt.ylabel('Cantidad de peliculas')
 plt.tight_layout()
-plt.show()
+plt.show()'''
+
+#Extra
+
+#4.16
+#Peliculas con menos ingresos
+#print(movies.sort_values(by='revenue',ascending=True)[['originalTitle','revenue']].head(5))
+
+#4.17
+#Director con mas peliculas hechas
+print(movies['director'].value_counts().sort_values(ascending=False).head(1))

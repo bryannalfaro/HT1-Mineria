@@ -7,10 +7,10 @@ import seaborn as sns
 import re
 from clean import *
 from collections import Counter
-movies = pd.read_csv('movies.csv')
+movies = pd.read_csv('movies.csv', encoding='latin1', engine='python')
 #pd.set_option('display.max_columns',None)
 
-'''#Primeras filas con head
+#Primeras filas con head
 print("Exploracion de primeros datos de cada variable")
 print(movies.head())
 
@@ -23,53 +23,29 @@ print("Resumen de variables")
 print(movies.describe().transpose())
 
 #Evaluacion de normalidad de datos
-data = movies['popularity'].dropna()
-plt.hist(data,color='green')
-plt.title('Histograma para popularidad')
-plt.xlabel('Popularidad')
-plt.ylabel('Cantidad')
-plt.show()
-qqplot(data , line='s')
-plt.show()
+quantitative_vars = ['popularity', 'budget', 'revenue', 'genresAmount', 'productionCoAmount',
+'productionCountriesAmount', 'voteCount', 'voteAvg', 'actorsPopularity',
+'actorsAmount', 'castWomenAmount', 'castMenAmount']
+quantitative_vars_clean = ['actorsPopularity', 'castWomenAmount', 'castMenAmount']
 
-print('Curtosis: ',stats.kurtosis(data))
-print('Asimetria: ',stats.skew(data))
+for var in quantitative_vars:
+    print("Evaluacion de normalidad de ", movies[var])
+    if var in quantitative_vars_clean:
+        data = clean_numeric_data(movies[var], var != 'actorsPopularity')["Item"].dropna()
+    else:
+        data = movies[var]
+    print(type(data))
+    plt.hist(data,color='green')
+    plt.title(f'Histograma para {var}')
+    plt.xlabel(var)
+    plt.ylabel('Cantidad')
+    plt.show()
+    qqplot(data , line='s')
+    plt.title(f'QQplot para {var}')    
+    plt.show()
 
-data = movies['budget'].dropna()
-plt.hist(data,color='green')
-plt.title('Histograma para budget')
-plt.xlabel('Budget')
-plt.ylabel('Cantidad')
-plt.show()
-qqplot(data , line='s')
-plt.show()
-
-print('Curtosis: ',stats.kurtosis(data))
-print('Asimetria: ',stats.skew(data))
-
-data = movies['revenue'].dropna()
-plt.hist(data,color='green')
-plt.title('Histograma para revenue')
-plt.xlabel('Revenue')
-plt.ylabel('Cantidad')
-plt.show()
-qqplot(data , line='s')
-plt.show()
-
-print('Curtosis: ',stats.kurtosis(data))
-print('Asimetria: ',stats.skew(data))
-
-data = movies['genresAmount'].dropna()
-plt.hist(data,color='green')
-plt.title('Histograma para genresAmount')
-plt.xlabel('genresAmount')
-plt.ylabel('Cantidad')
-plt.show()
-qqplot(data , line='s')
-plt.show()
-
-print('Curtosis: ',stats.kurtosis(data))
-print('Asimetria: ',stats.skew(data))
+    print('Curtosis: ',stats.kurtosis(data))
+    print('Asimetria: ',stats.skew(data))
 
 #Frecuencia de datos cualitativos
 print((movies['id'].value_counts()))
@@ -126,7 +102,7 @@ plt.xlabel('año')
 plt.xticks(rotation=90)
 plt.ylabel('Cantidad de peliculas')
 plt.tight_layout()
-plt.show()'''
+plt.show()
 
 #Extra
 

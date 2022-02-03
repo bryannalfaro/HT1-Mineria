@@ -7,3 +7,20 @@ def clean_data(list_data):
     list_split_empty = [x.strip("") for x in list_final]
     count = Counter(list_split_empty)
     return pd.DataFrame(count.most_common(10000), columns=['Item', "Count"])
+
+def clean_numeric_data(list_data, size_filter, size=200):
+    list_splitted = list_data.str.cat(sep='|')
+    list_final = list_splitted.split("|")
+    list_no_strings = [ try_float(x) for x in list_final ]
+    list_no_nan = [x for x in list_no_strings if x is not None]
+    if size_filter:
+        list_no_nan = [x for x in list_no_nan if x < size]
+    count = Counter(list_no_nan)
+    df = pd.DataFrame(count.most_common(10000), columns=['Item', "Count"])
+    return df
+
+def try_float(x):
+    try:
+        return float(x)
+    except ValueError:
+        return None

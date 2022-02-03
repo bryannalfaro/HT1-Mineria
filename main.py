@@ -34,7 +34,6 @@ for var in quantitative_vars:
         data = clean_numeric_data(movies[var], var != 'actorsPopularity')["Item"].dropna()
     else:
         data = movies[var]
-    print(type(data))
     plt.hist(data,color='green')
     plt.title(f'Histograma para {var}')
     plt.xlabel(var)

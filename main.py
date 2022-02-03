@@ -91,7 +91,7 @@ print(movies.sort_values(by='revenue',ascending=False)[['originalTitle','revenue
 print(movies.sort_values(by='voteCount',ascending=False)[['originalTitle','voteCount']].head(1))
 
 #4.4
-print(movies.sort_values(by='voteAvg',ascending=True)[['originalTitle','voteAvg']].head(1))
+print(movies.sort_values(by='voteAvg',ascending=True)[['title','voteAvg']].head(1))
 
 #4.5
 print(movies['releaseDate'].str.split('-').str[0].value_counts().sort_values(ascending=False))

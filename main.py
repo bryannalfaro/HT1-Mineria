@@ -248,6 +248,9 @@ print(bestRatingMovies)
 # movies.index = pd.to_datetime(movies['releaseDate'],yearfirst=True)
 # print(movies.groupby(by=[movies.index.month]).agg({'revenue':'sum'}).sort_values(by= "revenue", ascending=False))
 
+# movies['yearreleaseDate'] = movies['releaseDate'].str.split('-').str[0]
+# movies['monthreleaseDate'] = movies['releaseDate'].str.split('-').str[1]
+# print((movies.groupby(movies['yearreleaseDate'])['monthreleaseDate'].value_counts()).groupby('monthreleaseDate').mean())
 
 #4.14
 

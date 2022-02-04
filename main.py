@@ -41,7 +41,7 @@ for var in quantitative_vars:
     plt.ylabel('Cantidad')
     plt.show()
     qqplot(data , line='s')
-    plt.title(f'QQplot para {var}')    
+    plt.title(f'QQplot para {var}')
     plt.show()
 
     print('Curtosis: ',stats.kurtosis(data))
@@ -130,9 +130,25 @@ plt.show()
 
 #4.16
 #Peliculas con menos ingresos
-#print(movies.sort_values(by='revenue',ascending=True)[['originalTitle','revenue']].head(5))
+print(movies.sort_values(by='revenue',ascending=True)[['originalTitle','revenue']].head(5))
 
 #4.17
 #Director con mas peliculas hechas
 print(movies['director'].value_counts().sort_values(ascending=False).head(1))
+
+#4.18
+#Pais de produccion de las 5 peliculas con mas ingreso
+print(movies.sort_values(by='revenue',ascending=False)[['productionCountry','revenue']].head(5))
+
+#4.19
+#2 Companias con mayor cantidad de peliculas realizadas
+print(movies['productionCompany'].value_counts().head(2))
+
+#4.20
+movies['mainProductionCountry'] = movies['productionCountry'].str.split('|').str[0]
+print(movies.groupby('mainProductionCountry')['runtime'].mean().sort_values(ascending=False))
+
+#4.21
+#Peliculas con mayor cantidad de actores
+print(movies.sort_values(by='actorsAmount',ascending=False)[['title','actorsAmount']].head(1))
 '''

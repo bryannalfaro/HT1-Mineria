@@ -12,7 +12,7 @@ from collections import Counter
 movies = pd.read_csv('movies.csv', encoding='latin1', engine='python')
 #pd.set_option('display.max_columns',None)
 
-'''
+
 #Primeras filas con head
 print("Exploracion de primeros datos de cada variable")
 print(movies.head())
@@ -24,9 +24,9 @@ print(movies.shape)
 #Resumen de variables
 print("Resumen de variables")
 print(movies.describe().transpose())
-'''
 
-'''
+
+
 #Evaluacion de normalidad de datos
 quantitative_vars = ['popularity', 'budget', 'revenue', 'runtime', 'genresAmount', 'productionCoAmount',
 'productionCountriesAmount', 'voteCount', 'voteAvg', 'actorsPopularity',
@@ -50,10 +50,23 @@ for var in quantitative_vars:
 
     print('Curtosis: ',stats.kurtosis(data))
     print('Asimetria: ',stats.skew(data))
-'''
+
+
+#Evaluacion de normalidad de datos para date
+data = pd.to_numeric(movies['releaseDate'].str.split('-').str[0]).dropna()
+plt.hist(data,color='green')
+plt.title('Histograma para releaseDate')
+plt.xlabel('releaseDate')
+plt.ylabel('Cantidad')
+plt.show()
+qqplot(data , line='s')
+plt.show()
+
+print('Curtosis: ',stats.kurtosis(data))
+print('Asimetria: ',stats.skew(data))
 
 #Frecuencia de datos cualitativos
-'''
+
 print((movies['id'].value_counts()))
 print((movies['originalTitle'].value_counts()))
 print((movies['originalLanguage'].value_counts()))
@@ -68,9 +81,8 @@ print((movies['productionCountry'].value_counts()))
 print((movies['releaseDate'].value_counts()))
 print((movies['actors'].value_counts()))
 print((movies['actorsCharacter'].value_counts()))
-'''
 
-'''
+
 #Evaluacion de datos sin estar agrupados
 print("Genres")
 print(clean_data(movies['genres']))
@@ -84,12 +96,16 @@ print("actors")
 print(clean_data(movies['actors']))
 print("actorsCharacter")
 print(clean_data(movies['actorsCharacter']))
-'''
 
-'''
+
+
 cualitative_vars = ['id', 'originalTitle', 'originalLanguage', 'title', 'homePage', 'video', 'director', 'genres', 'productionCompany',
 'productionCompanyCountry', 'productionCountry', 'releaseDate', 'actors', 'actorsCharacter']
 cualitative_vars_clean = ['director', 'genres', 'productionCompany', 'productionCompanyCountry', 'productionCountry', 'director', 'actors', 'actorsCharacter']
+
+'''
+Se comenta esto , debido a que las barras por el procesamiento tardan en salir
+para ejecutarlas , descomentar.
 
 for var in cualitative_vars:
     if var in cualitative_vars_clean:
@@ -104,10 +120,10 @@ for var in cualitative_vars:
     plt.title(f'Frecuencia de datos cualitativos para {var}')
     plt.ylabel('Cantidad')
     plt.xlabel(var)
-    plt.show()
-'''
+    plt.show()'''
 
-'''
+
+
 #Ejercicio 4
 
 #4.1
@@ -132,9 +148,9 @@ plt.xticks(rotation=90)
 plt.ylabel('Cantidad de peliculas')
 plt.tight_layout()
 plt.show()
-'''
 
-'''
+
+
 # 4.6
 # Top 20 peliculas recientes y genero principal
 recentMovies = movies.sort_values(by='releaseDate',ascending=False)[['originalTitle','genres']].head(20)
@@ -216,59 +232,58 @@ plt.show()
 bestRatingMovies = movies.sort_values(by='voteAvg', ascending=False)[['originalTitle', 'voteAvg', 'director']].head(20)
 print(bestRatingMovies)
 
-# corr = movies.corr()
-# # ax = sns.heatmap(corr, annot=True, fmt=".2f", cmap='Blues',
-# #            vmin=-1, vmax=1, cbar_kws={"shrink": .8})
-
 #4.11
 
-# r, p = stats.pearsonr(movies['revenue'], movies['budget'])
-# print(f"Correlacion Pearson r={r}, p={p}")
+corr = movies.corr()
+ax = sns.heatmap(corr, annot=True, fmt=".2f", cmap='Blues',vmin=-1, vmax=1, cbar_kws={"shrink": .8})
 
-# fig, ax = plt.subplots(1, 1, figsize=(6,4))
-# ax.scatter(x=movies.budget, y=movies.revenue, alpha= 0.8)
-# ax.set_xlabel('Budget')
-# ax.set_ylabel('Revenue');
+r, p = stats.pearsonr(movies['revenue'], movies['budget'])
+print(f"Correlacion Pearson r={r}, p={p}")
 
-# plt.show()
+fig, ax = plt.subplots(1, 1, figsize=(6,4))
+ax.scatter(x=movies.budget, y=movies.revenue, alpha= 0.8)
+ax.set_xlabel('Budget')
+ax.set_ylabel('Revenue');
+
+plt.show()
 
 #4.12
-# print('Correlación Pearson: ', movies['revenue'].corr(movies['releaseDate'].str.split('-').str[1].dropna().astype(int), method='pearson'))
-# print('Correlación spearman: ', movies['revenue'].corr(movies['releaseDate'].str.split('-').str[1].dropna().astype(int), method='spearman'))
-# print('Correlación kendall: ', movies['revenue'].corr(movies['releaseDate'].str.split('-').str[1].dropna().astype(int), method='kendall'))
+print('Correlación Pearson: ', movies['revenue'].corr(movies['releaseDate'].str.split('-').str[1].dropna().astype(int), method='pearson'))
+print('Correlación spearman: ', movies['revenue'].corr(movies['releaseDate'].str.split('-').str[1].dropna().astype(int), method='spearman'))
+print('Correlación kendall: ', movies['revenue'].corr(movies['releaseDate'].str.split('-').str[1].dropna().astype(int), method='kendall'))
 
-# fig, ax = plt.subplots(1, 1, figsize=(6,4))
-# ax.scatter(x=movies.revenue, y=movies['releaseDate'].str.split('-').str[1], alpha= 0.8)
-# ax.set_xlabel('Reveneu')
-# ax.set_ylabel('Release Date');
+fig, ax = plt.subplots(1, 1, figsize=(6,4))
+ax.scatter(x=movies.revenue, y=movies['releaseDate'].str.split('-').str[1], alpha= 0.8)
+ax.set_xlabel('Reveneu')
+ax.set_ylabel('Release Date');
 
-# plt.show()
+plt.show()
 
 #4.13
-# movies.index = pd.to_datetime(movies['releaseDate'],yearfirst=True)
-# print(movies.groupby(by=[movies.index.month]).agg({'revenue':'sum'}).sort_values(by= "revenue", ascending=False))
+movies.index = pd.to_datetime(movies['releaseDate'],yearfirst=True)
+print(movies.groupby(by=[movies.index.month]).agg({'revenue':'sum'}).sort_values(by= "revenue", ascending=False))
 
-# movies['yearreleaseDate'] = movies['releaseDate'].str.split('-').str[0]
-# movies['monthreleaseDate'] = movies['releaseDate'].str.split('-').str[1]
-# print((movies.groupby(movies['yearreleaseDate'])['monthreleaseDate'].value_counts()).groupby('monthreleaseDate').mean())
+movies['yearreleaseDate'] = movies['releaseDate'].str.split('-').str[0]
+movies['monthreleaseDate'] = movies['releaseDate'].str.split('-').str[1]
+print((movies.groupby(movies['yearreleaseDate'])['monthreleaseDate'].value_counts()).groupby('monthreleaseDate').mean())
 
 #4.14
 
-# print('Correlación Pearson: ', movies['revenue'].corr(movies['voteAvg'], method='pearson'))
-# print('Correlación spearman: ', movies['revenue'].corr(movies['voteAvg'], method='spearman'))
-# print('Correlación kendall: ', movies['revenue'].corr(movies['voteAvgS'], method='kendall'))
+print('Correlación Pearson: ', movies['revenue'].corr(movies['voteAvg'], method='pearson'))
+print('Correlación spearman: ', movies['revenue'].corr(movies['voteAvg'], method='spearman'))
+print('Correlación kendall: ', movies['revenue'].corr(movies['voteAvg'], method='kendall'))
 
-# fig, ax = plt.subplots(1, 1, figsize=(6,4))
-# ax.scatter(x=movies.revenue, y=movies.voteAvg, alpha= 0.8)
-# ax.set_xlabel('Reveneu')
-# ax.set_ylabel('Votes Average');
+fig, ax = plt.subplots(1, 1, figsize=(6,4))
+ax.scatter(x=movies.revenue, y=movies.voteAvg, alpha= 0.8)
+ax.set_xlabel('Reveneu')
+ax.set_ylabel('Votes Average');
 
-# plt.show()
+plt.show()
 
 #4.15
-# print(movies.sort_values(by='runtime',ascending=False)[['genres','runtime']].head(4))
-'''
-'''
+print(movies.sort_values(by='runtime',ascending=False)[['genres','runtime']].head(4))
+
+
 #Extra
 
 #4.16
@@ -277,7 +292,6 @@ print(movies.sort_values(by='revenue',ascending=True)[['title','revenue']].head(
 
 #4.17
 #Director con mas peliculas hechas
-# print(movies['director'].value_counts().sort_values(ascending=False).head(1))
 print(movies['director'].value_counts().sort_values(ascending=False).head(1))
 
 #4.18
@@ -295,4 +309,4 @@ print(movies.groupby('mainProductionCountry')['runtime'].mean().sort_values(asce
 #4.21
 #Peliculas con mayor cantidad de actores
 print(movies.sort_values(by='actorsAmount',ascending=False)[['title','actorsAmount']].head(1))
-'''
+

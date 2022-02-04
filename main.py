@@ -270,7 +270,7 @@ print(bestRatingMovies)
 
 #4.16
 #Peliculas con menos ingresos
-print(movies.sort_values(by='revenue',ascending=True)[['originalTitle','revenue']].head(5))
+print(movies.sort_values(by='revenue',ascending=True)[['title','revenue']].head(5))
 
 #4.17
 #Director con mas peliculas hechas

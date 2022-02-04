@@ -176,7 +176,7 @@ plt.show()'''
 # plt.show()
 
 #4.15
-print(movies.sort_values(by='runtime',ascending=False)[['genres','runtime']].head(4))
+# print(movies.sort_values(by='runtime',ascending=False)[['genres','runtime']].head(4))
 
 #Extra
 

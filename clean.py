@@ -9,13 +9,18 @@ def clean_data(list_data):
     df = pd.DataFrame(count.most_common(10000), columns=['Item', "Count"])
     return df
 
-def clean_numeric_data(list_data, size_filter, size=200):
+def clean_numeric_data(list_data, size_filter, size=200, keep_size=False):
     list_splitted = list_data.str.cat(sep='|')
     list_final = list_splitted.split("|")
     list_no_strings = [ try_float(x) for x in list_final ]
-    list_no_nan = [x for x in list_no_strings if x is not None]
+    list_no_nan = list_no_strings
+    if not keep_size:
+        list_no_nan = [x for x in list_no_strings if x is not None]
     if size_filter:
-        list_no_nan = [x for x in list_no_nan if x < size]
+        if keep_size:
+            list_no_nan = [ filter_size(x, size) for x in list_no_nan ]
+        else:
+            list_no_nan = [x for x in list_no_nan if x < size]
     count = Counter(list_no_nan)
     df = pd.DataFrame(count.most_common(10000), columns=['Item', "Count"])
     return df
@@ -25,3 +30,9 @@ def try_float(x):
         return float(x)
     except ValueError:
         return None
+
+def filter_size(x, size):
+    if x is not None:
+        if x < size:
+            return x
+    return None

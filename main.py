@@ -1,3 +1,11 @@
+#Universidad del Valle de Guatemala
+#Mineria de Datos
+#HT1 Analisis Exploratorio
+#Integrantes
+#Bryann Alfaro
+#Diego de Jesus
+#Julio Herrera
+
 from math import ceil
 import pandas as pd
 import numpy as np

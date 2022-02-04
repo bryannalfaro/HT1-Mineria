@@ -1,3 +1,4 @@
+from math import ceil
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -23,11 +24,11 @@ print("Resumen de variables")
 print(movies.describe().transpose())
 
 #Evaluacion de normalidad de datos
-quantitative_vars = ['popularity', 'budget', 'revenue', 'genresAmount', 'productionCoAmount',
+quantitative_vars = ['popularity', 'budget', 'revenue', 'runtime', 'genresAmount', 'productionCoAmount',
 'productionCountriesAmount', 'voteCount', 'voteAvg', 'actorsPopularity',
 'actorsAmount', 'castWomenAmount', 'castMenAmount']
 quantitative_vars_clean = ['actorsPopularity', 'castWomenAmount', 'castMenAmount']
-
+'''
 for var in quantitative_vars:
     print("Evaluacion de normalidad de ", movies[var])
     if var in quantitative_vars_clean:
@@ -45,8 +46,9 @@ for var in quantitative_vars:
 
     print('Curtosis: ',stats.kurtosis(data))
     print('Asimetria: ',stats.skew(data))
-
+'''
 #Frecuencia de datos cualitativos
+'''
 print((movies['id'].value_counts()))
 print((movies['originalTitle'].value_counts()))
 print((movies['originalLanguage'].value_counts()))
@@ -61,8 +63,8 @@ print((movies['productionCountry'].value_counts()))
 print((movies['releaseDate'].value_counts()))
 print((movies['actors'].value_counts()))
 print((movies['actorsCharacter'].value_counts()))
-
-
+'''
+'''
 #Evaluacion de datos sin estar agrupados
 print("Genres")
 print(clean_data(movies['genres']))
@@ -76,8 +78,29 @@ print("actors")
 print(clean_data(movies['actors']))
 print("actorsCharacter")
 print(clean_data(movies['actorsCharacter']))
+'''
+'''
+cualitative_vars = ['id', 'originalTitle', 'originalLanguage', 'title', 'homePage', 'video', 'director', 'genres', 'productionCompany',
+'productionCompanyCountry', 'productionCountry', 'releaseDate', 'actors', 'actorsCharacter']
+cualitative_vars_clean = ['director', 'genres', 'productionCompany', 'productionCompanyCountry', 'productionCountry', 'director', 'actors', 'actorsCharacter']
 
+for var in cualitative_vars:
+    if var in cualitative_vars_clean:
+        data = clean_data(movies[var])
+    else:
+        data = movies[var].value_counts()
+    plt.figure(figsize=(15,5))
+    if var in cualitative_vars_clean:
+        sns.barplot(data["Item"].values, data["Count"].values, alpha=0.8)
+    else:
+        sns.barplot(data.index, data.values, alpha=0.8)
+    plt.title(f'Frecuencia de datos cualitativos para {var}')
+    plt.ylabel('Cantidad')
+    plt.xlabel(var)
+    plt.show()
+'''
 
+'''
 #Ejercicio 4
 
 #4.1
@@ -112,3 +135,4 @@ plt.show()
 #4.17
 #Director con mas peliculas hechas
 print(movies['director'].value_counts().sort_values(ascending=False).head(1))
+'''

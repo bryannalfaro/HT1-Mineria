@@ -6,7 +6,8 @@ def clean_data(list_data):
     list_final = list_splitted.split("|")
     list_split_empty = [x.strip("") for x in list_final]
     count = Counter(list_split_empty)
-    return pd.DataFrame(count.most_common(10000), columns=['Item', "Count"])
+    df = pd.DataFrame(count.most_common(10000), columns=['Item', "Count"])
+    return df
 
 def clean_numeric_data(list_data, size_filter, size=200):
     list_splitted = list_data.str.cat(sep='|')

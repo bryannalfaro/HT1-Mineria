@@ -7,7 +7,7 @@ import seaborn as sns
 import re
 from clean import *
 from collections import Counter
-movies = pd.read_csv('movies.csv')
+movies = pd.read_csv('movies.csv', encoding='unicode_escape')
 #pd.set_option('display.max_columns',None)
 
 '''#Primeras filas con head
@@ -128,6 +128,56 @@ plt.ylabel('Cantidad de peliculas')
 plt.tight_layout()
 plt.show()'''
 
+
+# corr = movies.corr()
+# # ax = sns.heatmap(corr, annot=True, fmt=".2f", cmap='Blues',
+# #            vmin=-1, vmax=1, cbar_kws={"shrink": .8})
+
+#4.11
+
+# r, p = stats.pearsonr(movies['revenue'], movies['budget'])
+# print(f"Correlacion Pearson r={r}, p={p}")
+
+# fig, ax = plt.subplots(1, 1, figsize=(6,4))
+# ax.scatter(x=movies.budget, y=movies.revenue, alpha= 0.8)
+# ax.set_xlabel('Budget')
+# ax.set_ylabel('Revenue');
+
+# plt.show()
+
+#4.12
+# print('Correlación Pearson: ', movies['revenue'].corr(movies['releaseDate'].str.split('-').str[1].dropna().astype(int), method='pearson'))
+# print('Correlación spearman: ', movies['revenue'].corr(movies['releaseDate'].str.split('-').str[1].dropna().astype(int), method='spearman'))
+# print('Correlación kendall: ', movies['revenue'].corr(movies['releaseDate'].str.split('-').str[1].dropna().astype(int), method='kendall'))
+
+# fig, ax = plt.subplots(1, 1, figsize=(6,4))
+# ax.scatter(x=movies.revenue, y=movies['releaseDate'].str.split('-').str[1], alpha= 0.8)
+# ax.set_xlabel('Reveneu')
+# ax.set_ylabel('Release Date');
+
+# plt.show()
+
+#4.13
+# movies.index = pd.to_datetime(movies['releaseDate'],yearfirst=True)
+# print(movies.groupby(by=[movies.index.month]).agg({'revenue':'sum'}).sort_values(by= "revenue", ascending=False))
+
+
+#4.14
+
+# print('Correlación Pearson: ', movies['revenue'].corr(movies['voteAvg'], method='pearson'))
+# print('Correlación spearman: ', movies['revenue'].corr(movies['voteAvg'], method='spearman'))
+# print('Correlación kendall: ', movies['revenue'].corr(movies['voteAvgS'], method='kendall'))
+
+# fig, ax = plt.subplots(1, 1, figsize=(6,4))
+# ax.scatter(x=movies.revenue, y=movies.voteAvg, alpha= 0.8)
+# ax.set_xlabel('Reveneu')
+# ax.set_ylabel('Votes Average');
+
+# plt.show()
+
+#4.15
+print(movies.sort_values(by='runtime',ascending=False)[['genres','runtime']].head(4))
+
 #Extra
 
 #4.16
@@ -136,4 +186,4 @@ plt.show()'''
 
 #4.17
 #Director con mas peliculas hechas
-print(movies['director'].value_counts().sort_values(ascending=False).head(1))
+# print(movies['director'].value_counts().sort_values(ascending=False).head(1))
